@@ -79,10 +79,70 @@ for k = 1:total_images
         end
     end
     
+    %apply gaussianFilter before apllying the temporal dervivate
+    gaussFilt_image = imgaussfilt(I_gray,2.0);
+    gauss_d1Filt_image = gaussFilt_image;
+    
+    %apply d1 temporal derivate
+    for v = 1:height
+        for h = 2:width-1
+            gauss_d1Filt_image(v,h) = (gaussFilt_image(v,h-1)*(-1)+gaussFilt_image(v,h+1)*1)*0.5;
+        end
+    end
+    
+    %apply gauss temporal derivate
+    gauss_gaussFilt_image = gaussFilt_image;
+    for v = 1:height
+        for h = 2:width-1
+            gauss_gaussFilt_image(v,h) = (gaussFilt_image(v,h-1)*gaussFilt(1,1))+(gaussFilt_image(v,h)*gaussFilt(1,2))+(gaussFilt_image(v,h+1)*gaussFilt(1,3));
+        end
+    end
+    
     %function for getting the mask
+    %create the gradian to store the gradian between images
+    
+    %when reading the first picture, create the original matrix to calculate
+    %the gradian
+    if k == 1
+        tcd_gradian = three_cross_d1Filt_image;
+        fcd_gradian = five_cross_d1Filt_image;
+        gd_gradian = gauss_d1Filt_image;
+        tcg_gradian = three_cross_gaussFilt_image;
+        fcg_gradian = five_cross_gaussFilt_image;
+        gg_gradian = gauss_gaussFilt_image;
+        
+    end
+    %after the first image, it is avaiable to get the gradian
+    if k > 1
+        tcd_gradian = get_gradian(three_cross_d1Filt_image,tcd_temp_image);
+        fcd_gradian = get_gradian(five_cross_d1Filt_image,fcd_temp_image);
+        gd_gradian = get_gradian(gauss_d1Filt_image,gd_temp_image);
+        tcg_gradian = get_gradian(three_cross_gaussFilt_image,tcg_temp_image);
+        fcg_gradian = get_gradian(five_cross_gaussFilt_image,fcg_temp_image);
+        gg_gradian = get_gradian(gauss_gaussFilt_image,gg_temp_image);
+    end
+    
+    %set the current image as the base to calculate the next gradian
+    tcd_temp_image = store(three_cross_d1Filt_image);
+    fcd_temp_image = store(five_cross_d1Filt_image);
+    gd_temp_image = store(gauss_d1Filt_image);
+    tcg_temp_image = store(three_cross_gaussFilt_image);
+    fcg_temp_image = store(five_cross_gaussFilt_image);
+    gg_temp_image = store(gauss_gaussFilt_image);
+    
+    %here we have the gradian realize image which could check it is bad or
+    %good
     
     
-    
+    %imshow(tcd_gradian)
+    %imshow(fcd_gradian)
+    %imshow(gd_gradian)
+    %imshow(tcg_gradian)
+    %imshow(fcg_gradian)
+    %imshow(gg_gradian)
+    %imshow(gaussFilt_image)
+    %imshow(gauss_d1Filt_image)
+    %imshow(gauss_gaussFilt_image)
     %imshow(five_cross_d1Filt_image)
     %imshow(three_cross_d1Filt_image)
     %imshow(five_cross_gaussFilt_image)
@@ -92,6 +152,13 @@ for k = 1:total_images
     %imshow(I_gray)
     %imshow(d1Filt_image)
     %imshow(gaussFilt_image)
-     
     
+end
+
+function temp_image = store(image)
+    temp_image = image;
+end
+
+function cal_gradian = get_gradian(image,temp_image)
+    cal_gradian = abs(image - temp_image);
 end
