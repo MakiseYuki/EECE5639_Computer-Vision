@@ -2,7 +2,6 @@ clear all;
 close all;
 img = cell(1,3);
 
-
 img{1} = imread('DanaHallWay1/DSC_0281.jpg');
 
 img{2} = imread('DanaHallWay1/DSC_0282.jpg');
@@ -19,7 +18,7 @@ points = cornerPoints([x y]);
 % deteact the points and use it to generate the features
 [features, points] = extractFeatures(grayImage, points);
 
-numImages = 8;
+numImages = 3;
 tforms(numImages) = projective2d(eye(3));
 
 % Initialize variable to hold image sizes.
@@ -112,6 +111,8 @@ for i = 1:numImages
     % Overlay the warpedImage onto the panorama.
     panorama = step(blender, panorama, warpedImage, mask);
 end
+% 
+% figure
+% imshow(panorama)
 
-figure
-imshow(panorama)
+

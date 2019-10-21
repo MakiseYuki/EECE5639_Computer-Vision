@@ -198,7 +198,7 @@ if param.subpixel
   [ii,jj] = subpixel(ii,jj,R);
 end
 
-if param.disp | nargout == 0
+if param.disp || nargout == 0
   % overlay corner points on original image
   figure;
   imagesc(I);
@@ -218,7 +218,7 @@ if nargout == 3
 end
 
 %=======================================================================
-function param = checkargs(isize,varargin);
+function param = checkargs(isize,varargin)
 
 % set defaults
 param.disp = 0;      % overlay corner points on image
@@ -245,7 +245,7 @@ else
 end
 
 % loop through parameter/value pairs
-while ii <= nargin - 1;
+while ii <= nargin - 1
   switch lower(varargin{ii})
    case 'disp'
     param.disp = 1;

@@ -55,7 +55,7 @@ elseif nargin < 4
     else
         tol = 0;
     end
-end;
+end
 
 % Set up to do the wrap operation, not handled by conv2
 if strcmp(shape, 'wrap')
@@ -68,14 +68,14 @@ y = doconv(x, m, shape, tol);
 
 %-----------------------------------------------------------------------
 
-function y = doconv(x, m, shape, tol);
+function y = doconv(x, m, shape, tol)
 % Carry out convolution
 [mx, nx] = size(x);
 [mm, nm] = size(m);
 
 % If the mask is bigger than the input, or it is 1-D already,
 % just let CONV2 handle it.
-if mm > mx | nm > nx | mm == 1 | nm == 1
+if mm > mx || nm > nx || mm == 1 || nm == 1
     y = conv2(x, m, shape);
 else
     % Get svd of mask
@@ -103,7 +103,7 @@ function r = trank(m, s, tol)
 % Approximate rank function - returns rank of matrix that fits given
 % matrix to within given relative rms error. Expects original matrix
 % and vector of singular values.
-if tol < 0 | tol > 1
+if tol < 0 || tol > 1
     error('Tolerance must be in range 0 to 1');
 end
 if tol == 0             % return estimate of actual rank
@@ -129,7 +129,7 @@ function y = wraparound(x, m)
 % "same" option.
 [mx, nx] = size(x);
 [mm, nm] = size(m);
-if mm > mx | nm > nx
+if mm > mx || nm > nx
     error('Mask does not fit inside array')
 end
 
