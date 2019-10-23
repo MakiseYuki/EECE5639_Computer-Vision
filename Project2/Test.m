@@ -20,6 +20,8 @@ points = cornerPoints([x y]);
 %points = cornerPoints([0,0]);
 [features, points] = extractFeatures(grayImage, points);
 
+
+
 % Initialize all the transforms to the identity matrix. Note that the
 % projective transform is used here because the building images are fairly
 % close to the camera. Had the scene been captured from a further distance,

@@ -1,4 +1,4 @@
-clear all; close all;
+%clear all; close all;
 
 % Read in two images. If the images are large, you may want to reduce
 % theirsize to keep running time reasonable!
@@ -10,11 +10,11 @@ total_images = numel(file_names);
 ImageA = imread(fullfile(image_folder,file_names(1).name));
 %ImageA_gray = rgb2gray(ImageA);
 %imshow(ImageA);
-
+img1 = ImageA(:,:,1);
 ImageB = imread(fullfile(image_folder,file_names(2).name));
 %ImageB_gray = rgb2gray(ImageB);
 %imshow(ImageB);
-
+img2 = ImageB(:,:,1);
 ImageC = imread(fullfile(image_folder,file_names(3).name));
 %ImageB_gray = rgb2gray(ImageB);
 %imshow(ImageB);
@@ -37,16 +37,84 @@ ImageC = imread(fullfile(image_folder,file_names(3).name));
 % Choose potential corner matches by finding pair of corners (one from each
 % image) such that they have the highest NCC value. You may also set a
 % threshold to keep only matches that have a large NCC score.
-
-[NCC_A,match_A] = NormCrossCor(R_ImageA, R_ImageB, Corners_A, Corners_B);
-[NCC_B,match_B] = NormCrossCor(R_ImageB, R_ImageC, Corners_B, Corners_C);
-[NCC_C,match_C] = NormCrossCor(R_ImageC, R_ImageB, Corners_C, Corners_B);
-
-% [NCC_B,NCC_C,B_fmap,C_fmap] = NormCrossCor(R_ImageB, R_ImageB, Corners_B, Corners_C);
 % 
-subplot(2,2,1); imshow(match_A), title('NCC A');
-subplot(2,2,2); imshow(match_B), title('NCC B');
-subplot(2,2,3); imshow(match_C), title('NCC C');
+[NCC_A,NCC_B] = NormCrossCor(R_ImageA, R_ImageB, Corners_A, Corners_B);
+
+
+% [x,y] = find(NCC_A>0.3);
+% [x2,y2] = find(NCC_B>0.3);
+% 
+% for i = 1:length(x2)
+%     s(i) = NCC_BA(x2(i),y2(i));
+% end
+% M = maxk(s,length(x)); m = min(M);
+% 
+% [x2,y2] = find(NCC_BA >= m);
+% 
+% pts1 = zeros(2,length(x));
+% pts2 = zeros(2,length(x2));
+% % 
+% pts1(1,:) = x;
+% pts1(2,:) = y;
+% 
+% pts2(1,:) = x2;
+% pts2(2,:) = y2;
+% 
+% pts1 = pts1';
+% pts2 = pts2';
+% % 
+% line_color = ["blue" "green" "yellow" "cyan" "magenta" "red"];
+% c = 1;
+% figure;
+% stackedImage = cat(1, img2, img1); % Places the two images side by side
+% imshow(stackedImage);
+% width = size(img1, 1);
+% hold on;
+% numPoints = length(pts1); % points2 must have same # of points
+% % Note, we must offset by the width of the image
+% for i = 1 : numPoints
+%     
+%     if c == 6
+%         c = 1;
+%     end
+%     plot(pts1(1, i), pts1(2, i), 'y+', pts2(1, i), ...
+%          pts2(2, i)+ width, 'y+');
+%     line([pts1(1, i) pts1(1, i)], [pts2(2, i) pts1(2, i) + width], ...
+%          'Color', line_color(c));
+%     c = c+1;
+% end
+
+%[minx,miny] = find(NCC_AB==min(NCC))
+
+% count = 0;
+% min_x = zeros(1,4);
+% min_y = zeros(1,4);
+% min_x2 = zeros(1,4);
+% min_y2 = zeros(1,4);
+
+% thre = 0.9;
+% [x,y] = find(NCC_A ~= 0);
+%[x2,y2] = find(NCC_B > thre);
+
+
+
+% for i = 1:4
+%     p4_x(i) = (x(i*600));
+%     p4_y(i) = (y(i*600));
+%     p4_x2(i) = (x2(i*800));
+%     p4_y2(i) = (y2(i*800));
+% end
+
+
+
+%[x2,y2] = find(NCC_BA>0.8);
+% 
+% x_t = zeros(2,length(x)); y_t = zeros(2,length(y2));
+% 
+% x_t(1,:) = x'; x_t(2,:) = y'; y_t(1,:) = x2'; y_t(2,:) = y2';
+% 
+% [H,Corrptx] = findHomography(x_t,y_t);
+
 
 % 
 % [x,y] = find(AB_fmap==255);
@@ -68,6 +136,18 @@ subplot(2,2,3); imshow(match_C), title('NCC C');
 % else
 %         match_p(i,j) = R_AB(B_row(i),B_col(i));
 % end
+
+% I = cell(1,2);
+% 
+% I{1} = rgb2gray(ImageA);
+% I{2} = rgb2gray(ImageB);
+% 
+% out = imtile(I);
+% imshow(out);
+% axis on
+% hold on;
+% plot(p4_x(1),p4_y(1), 'r+', 'MarkerSize', 5, 'LineWidth', 1);
+% plot(p4_x2(1)+512,p4_y2(1), 'g+', 'MarkerSize', 5, 'LineWidth', 1);
 
 
 
