@@ -1,0 +1,16 @@
+%function  SSD = getSSD(Image,Filter)
+
+[row_Filter,col_Filter] = size(Filter);
+[row_Image,col_Image] = size(Image);
+
+r = (col_Filter-1)/2;
+
+for i = 1+r:col_Image-r
+    for j = 1+r:row_Image-r
+        
+        for
+        
+    end
+end
+
+
