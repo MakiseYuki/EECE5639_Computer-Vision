@@ -3,7 +3,7 @@ function NormCorr = getNormCorr(Image,Filter)
 [row_Filter,col_Filter] = size(Filter);
 [row_Image,col_Image] = size(Image);
 
-r = (col_Filter-1)/2;
+r = (row_Filter-1)/2;
 NormCorr = zeros(row_Image,col_Image);
 
 for i = 1+r:col_Image-r

@@ -25,7 +25,7 @@ ImageC = imread(fullfile(image_folder,file_names(3).name));
 
 [R_ImageC, Corners_C] = HarrisCornerDet(ImageC);
 
-maxNormCorr = getMaxNormCorr(Corners_A,R_ImageB,2);
+maxNormCorr = getMaxNormCorr(Corners_A,R_ImageB,rSiz);
 
 
 

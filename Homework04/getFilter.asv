@@ -1,0 +1,19 @@
+function Filter = getFilter(Corners,R,rSize)
+
+rSize = 1;
+Corners = Corners_A;
+R = R_ImageA;
+[x_size,y_size] = size(Corners_A);
+
+[x,y] = find(Corners~=0);
+num = length(x);
+
+for i = 1:num
+    
+    if x(i)-rSize > 0 & x(i)+rSize < x_size & y(i)-rSize > 0 & y(i)+rSize < y_size
+
+        rFilter(:,:,i) = R(x(i)-rSize:x(i)+rSize,y(i)-rSize:y(i)+rSize);
+
+    end
+
+end
