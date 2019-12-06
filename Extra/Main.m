@@ -1,6 +1,6 @@
 clear all; close all;
 
-image_folder = 'D:\GitHub\EECE5639_Computer-Vision\Extra\hotel';
+image_folder = 'C:\Users\arsen\Documents\GitHub\EECE5639_Computer-Vision\Extra\hotel';
 file_names = dir(fullfile(image_folder,'*.png'));
 total_images = numel(file_names);
 img = cell(1,total_images);
@@ -13,14 +13,14 @@ end
 % for k = 1:total_images
 %     imshow(img{k})
 % end
-outputVideo = VideoWriter(fullfile('D:\GitHub\EECE5639_Computer-Vision\Extra','frame.avi'));
-outputVideo.FrameRate = 10;
+outputVideo = VideoWriter(fullfile('C:\Users\arsen\Documents\GitHub\EECE5639_Computer-Vision\Extra','frame.avi'));
+outputVideo.FrameRate = 5;
 open(outputVideo)
 for i = 1:total_images
    writeVideo(outputVideo,img{i})
 end
-pointTracker = vision.PointTracker;
-[points,point_validity,scores] = pointTracker(outputVideo);
+% pointTracker = vision.PointTracker;
+% [points,point_validity,scores] = pointTracker(outputVideo);
 close(outputVideo)
 %[interest_y,interest_x,m] = harris(img{k},1000);
 
