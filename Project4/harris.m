@@ -1,61 +1,5 @@
 function [varargout] = harris(I,varargin)
-%HARRIS Harris corner detector
-%  This function implements a version of the Harris corner detector which
-%  has the ability to calculate the eigenvalues of the gradient matrix
-%  directly.  This is opposed to calculating the corner response function as
-%  originally proposed by Harris in:
-%
-%  C. Harris and M. Stephens.  "A Combined Corner and Edge
-%  Detector", Proceedings of the 4th Alvey Vision Conference,
-%  Manchester, U.K. pgs 147-151, 1988
-%
-%  INPUT:
-%  I is the graylevel image to extract interest points from
-%  PARAMETER     DEFAULT   DESCRIPTION
-%  ----------   --------  --------------------------
-%  N               500    maximum number of interest points to return
-%  'disp'          N/A    overlays corner points on image
-%  'subpixel'      N/A    analytically calculate subpixel precision of 
-%                         corner locations by fitting a quadratic
-%                         surface to corner response function
-%  'thresh'          0    smallest acceptable value of response function
-%  'hsize_i          3    size of the smoothing Gaussian mask
-%  'sigma_i         0.5   standard deviation of Gaussian filter
-%  'tile'          [1 1]  break the image into regions [y x] to
-%                         distribute feature points more uniformly
-%  'mask'           M     array of 1's same size as image defining
-%                         where to compute feature points (useful
-%                         for radially compensated images)
-%  'eig'           N/A    use smallest eigenvalue as response
-%                         function, o.w. use response function (default)
-%                         originally proposed by Harris
-%  'fft'           N/A    perform smoothing filtering in freqeuncey
-%                         domain, o.w. perform in spatial domain (default)
-%
-%  OPTIONAL OUTPUT:
-%  (y,x) are the row/column locations of interest points
-%  M is the corner response function value associated with that point
-%
-%  Example:
-%  I = imread('cameraman.tif');
-%  [y,x,m] = harris(I,1000,'tile',[2 2],'disp');
-%
-%Date        Who     What
-%--------    ----    ---------------------------------    
-%20021010    rme     Create.
-%20021014    rme     Added option of subpixel precision.
-%20021110    rme     Added example and no ouput option
-%20021214    rme     Added tiling and mask features as well as
-%                    Harris corner response function. 
-%20030821    rme     Speed up subpixel code, as well as regional
-%                    processing code.
-%20030826    rme     Added 'fft' option to speed up feature extraction
-%                    for large images (e.g. 1024x1280)
-%20041218    rme     Added convolve2.m function call.
-%                    convolve2 performs SVD on the mask and then performs separable
-%                    convolution.  note that matlab's filter2 also tries to do this, but for
-%                    some reason calling conv2(h1,h2,I) is *much* slower than calling
-%                    conv2(conv2(I,h1),h2) which what convolve2 does.
+
   
 param = checkargs(size(I),varargin{:});
 
@@ -200,13 +144,13 @@ end
 
 if param.disp || nargout == 0
   % overlay corner points on original image
-  figure;
-  imagesc(I);
-  colormap gray;
-  hold on;
-  plot(jj,ii,'y+');
-  hold off;
-  drawnow;
+%   figure;
+%   imagesc(I);
+%   colormap gray;
+%   hold on;
+%   plot(jj,ii,'y+');
+%   hold off;
+%   drawnow;
 end
 
 if nargout >= 2
