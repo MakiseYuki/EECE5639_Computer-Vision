@@ -41,7 +41,3 @@ end
 
 release(videoPlayer);
 release(videoFileReader);
-% points = detectHarrisFeatures(img{1},'Filter',7);
-% 
-% imshow(img{1}), hold on,
-% plot(points);
