@@ -22,7 +22,7 @@ imshow(objectImage);
 title('Red box shows object region');
 
 points = detectHarrisFeatures(rgb2gray(objectFrame), 'ROI',objectRegion);
-
+distance = zeros(length(points(:,1)),2);
 pointImage = insertMarker(objectFrame,points.Location,'+','Color','white');
 figure;
 imshow(pointImage);
@@ -33,6 +33,7 @@ tracker = vision.PointTracker('MaxBidirectionalError',1);
 initialize(tracker,points.Location,objectFrame);
 
 while ~isDone(videoFileReader)
+      temp = points;
       frame = videoFileReader();
       [points,validity] = tracker(frame);
       out = insertMarker(frame,points(validity, :),'+');
